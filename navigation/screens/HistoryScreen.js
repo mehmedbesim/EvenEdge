@@ -32,7 +32,6 @@ const HistoryScreen = ({navigation}) => {
       type: 'Cooking',
       date: 'Yesterday 20:30',
     },
-    // Add more items as needed
   ]);
 
   const filteredData = data.filter(item =>
@@ -50,8 +49,6 @@ const HistoryScreen = ({navigation}) => {
   };
 
   const handleDelete = () => {
-    // Perform the delete operation here
-    // You can clear the 'data' state to delete all data
     setData([]);
     setShowDeleteConfirmation(false);
   };
@@ -85,7 +82,7 @@ const HistoryScreen = ({navigation}) => {
           <View style={{position: 'absolute', right: 10}}>
             <TouchableOpacity onPress={openDeleteConfirmation}>
               <Image
-                source={require('../../assest/trashIcon.png')} // Replace with the trash can icon path
+                source={require('../../assest/trashIcon.png')}
                 style={styles.trashCanIcon}
               />
             </TouchableOpacity>
@@ -209,7 +206,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 16,
-    // Add your icon styles here
   },
   clearIcon: {
     width: 8,
@@ -256,7 +252,7 @@ const styles = StyleSheet.create({
   deleteConfirmationSubText: {
     fontSize: 14,
     color: 'gray',
-    marginBottom: 20, // Adjust as needed
+    marginBottom: 20,
   },
   deleteConfirmationButtons: {
     flexDirection: 'row',

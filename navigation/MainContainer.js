@@ -1,17 +1,22 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import HistoryScreen from './screens/HistoryScreen';
+//import ChatScreen from './screens/ChatScreen';
 
 const homeName = 'Home';
 const searchName = 'Search';
 const historyName = 'History';
+const chatScreenName = 'Chat';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const MainContainer = ({navigation}) => {
   return (
@@ -20,7 +25,6 @@ const MainContainer = ({navigation}) => {
         initialRouteName={homeName}
         screenOptions={({route}) => ({
           headerShown: false,
-          // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
             let rn = route.name;

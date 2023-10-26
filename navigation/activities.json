@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "activity": "Text a friend you haven't talked to in a long time",
+      "type": "social",
+      "participants": 2,
+      "price": 0.05,
+      "link": "",
+      "key": "6081071",
+      "accessibility": 0.2
+    },
+    {
+      "id": 2,
+      "activity": "Make a budget",
+      "type": "busywork",
+      "participants": 1,
+      "price": 0,
+      "link": "",
+      "key": "4379552",
+      "accessibility": 0.1
+    },
+    {
+      "id": 3,
+      "activity": "Go to a nail salon",
+      "type": "relaxation",
+      "participants": 1,
+      "price": 0.4,
+      "link": "",
+      "key": "7526324",
+      "accessibility": 0.5
+    },
+    {
+      "id": 4,
+      "activity": "Patronize a local independent restaurant",
+      "type": "recreational",
+      "participants": 1,
+      "price": 0.2,
+      "link": "",
+      "key": "5319204",
+      "accessibility": 0.1
+    },
+    {
+      "id": 5,
+      "activity": "Look at pictures and videos of cute animals",
+      "type": "relaxation",
+      "participants": 1,
+      "price": 0,
+      "link": "",
+      "key": "2565076",
+      "accessibility": 1
+    },
+    {
+      "id": 6,
+      "activity": "Color",
+      "type": "relaxation",
+      "participants": 1,
+      "price": 0.1,
+      "link": "",
+      "key": "5322987",
+      "accessibility": 0
+    },
+    {
+      "id": 7,
+      "activity": "Find a DIY to do",
+      "type": "diy",
+      "participants": 1,
+      "price": 0.4,
+      "link": "",
+      "key": "4981819",
+      "accessibility": 0.3
+    },
+    {
+      "id": 8,
+      "activity": "Take a spontaneous road trip with some friends",
+      "type": "social",
+      "participants": 4,
+      "price": 0.2,
+      "link": "",
+      "key": "2085321",
+      "accessibility": 0.3
+    },
+    {
+      "id": 9,
+      "activity": "Write a note of appreciation to someone",
+      "type": "social",
+      "participants": 1,
+      "price": 0,
+      "link": "",
+      "key": "1770521",
+      "accessibility": 0
+    }
+  ]
+  

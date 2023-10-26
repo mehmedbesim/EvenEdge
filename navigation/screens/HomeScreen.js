@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,25 +10,63 @@ import {
   FlatList,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
+import {useDispatch, useSelector} from 'react-redux';
+import {getBoredAPI} from './redux/actions';
 
 const HomeScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [activity, setActivity] = useState('Stop being bored!');
+  const [subText, setSubText] = useState(
+    'Configure parameters to find activities',
+  );
+  const [type, setType] = useState('All');
   const [price, setPrice] = useState(0.5);
   const [participiant, setParticipiant] = useState(2);
   const [accesibility, setAccesibility] = useState(0.5);
 
-  const buttonList = [
+  const isLoading = useSelector(state => state.isLoading);
+  const data = useSelector(state => state.data);
+
+  const handleFindActivity = () => {
+    if (!isLoading) {
+      dispatch(getBoredAPI());
+      setActivity(data?.activity);
+      setType(data?.type);
+      setAccesibility(data?.accessibility);
+      setParticipiant(data?.participants);
+      setPrice(data?.price);
+      setSubText(
+        data?.type +
+          ' • ' +
+          data?.participants +
+          ' Person' +
+          ' • ' +
+          (data?.price > 0.5 ? ' Expensive' : ' Cheap'),
+      );
+    } else {
+      setActivity('Loading....');
+      setSubText('Searching for activities');
+    }
+  };
+
+  const typeList = [
     {title: 'All', active: true},
     {title: 'Recreational', active: false},
     {title: 'Relaxation', active: false},
     {title: 'Cooking', active: false},
     {title: 'Charity', active: false},
-    // Add more buttons as needed
+    {title: 'Busywork', active: false},
+    {title: 'Education', active: false},
+    {title: 'Social', active: false},
+    {title: 'Music', active: false},
+    {title: 'Diy', active: false},
   ];
 
   const toggleButton = index => {
     const updatedButtons = buttons.map((button, i) => {
       if (i === index) {
         // Activate the clicked button
+        setType(button.title);
         return {...button, active: true};
       } else {
         // Deactivate all other buttons
@@ -36,8 +75,28 @@ const HomeScreen = ({navigation}) => {
     });
     setButtons(updatedButtons);
   };
+  const generateRandomValues = () => {
+    const randomTypeIndex = Math.floor(Math.random() * buttons.length);
+    const randomPrice = Math.random();
+    const randomParticipant = Math.floor(Math.random() * 5) + 1;
+    const randomAccessibility = Math.random();
 
-  const [buttons, setButtons] = useState(buttonList);
+    const updatedButtons = buttons.map((button, index) => {
+      if (index === randomTypeIndex) {
+        return {...button, active: true};
+      } else {
+        return {...button, active: false};
+      }
+    });
+
+    setType(buttons[randomTypeIndex].title);
+    setPrice(randomPrice);
+    setParticipiant(randomParticipant);
+    setAccesibility(randomAccessibility);
+    setButtons(updatedButtons);
+  };
+
+  const [buttons, setButtons] = useState(typeList);
 
   return (
     <View style={styles.allPage}>
@@ -85,14 +144,12 @@ const HomeScreen = ({navigation}) => {
         onPress={() => navigation.navigate('Search')}>
         <View style={styles.buttonContent}>
           <Image
-            source={require('../../assest/icRandomize.png')}
+            source={require('../../assest/searchIcon.png')}
             style={styles.buttonIcon}
           />
           <View>
-            <Text style={styles.buttonTitle}>Stop being bored!</Text>
-            <Text style={styles.buttonSubtitle}>
-              Configure parameters to find activities
-            </Text>
+            <Text style={styles.buttonTitle}>{activity}</Text>
+            <Text style={styles.buttonSubtitle}>{subText}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -100,7 +157,7 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.sliderContainer}>
         <View style={styles.sliderSection}>
           <Text style={styles.sliderTitle}>Price</Text>
-          <Text style={styles.sliderValue}>{price.toFixed(1)}</Text>
+          <Text style={styles.sliderValue}>{price?.toFixed(1)}</Text>
           <Slider
             style={styles.slider}
             minimumValue={0}
@@ -114,7 +171,7 @@ const HomeScreen = ({navigation}) => {
 
         <View style={styles.sliderSection}>
           <Text style={styles.sliderTitle}>Participiant</Text>
-          <Text style={styles.sliderValue}>{participiant.toFixed(0)}</Text>
+          <Text style={styles.sliderValue}>{participiant?.toFixed(0)}</Text>
           <Slider
             style={styles.slider}
             minimumValue={1}
@@ -128,7 +185,7 @@ const HomeScreen = ({navigation}) => {
 
         <View style={styles.sliderSection}>
           <Text style={styles.sliderTitle}>Accesibility</Text>
-          <Text style={styles.sliderValue}>{accesibility.toFixed(2)}</Text>
+          <Text style={styles.sliderValue}>{accesibility?.toFixed(2)}</Text>
           <Slider
             style={styles.slider}
             minimumValue={0}
@@ -140,16 +197,16 @@ const HomeScreen = ({navigation}) => {
           />
         </View>
       </View>
-      {/* Add two buttons here */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.whiteButton}>
+        <TouchableOpacity
+          style={styles.whiteButton}
+          onPress={generateRandomValues}>
           <View style={styles.buttonContent}>
             <Image
               source={require('../../assest/icRandomize.png')}
               style={styles.buttonIcon}
             />
             <Text
-              // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 color: 'black',
                 alignSelf: 'center',
@@ -160,9 +217,11 @@ const HomeScreen = ({navigation}) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.blackButton}>
+        <TouchableOpacity
+          style={styles.blackButton}
+          onPress={handleFindActivity}
+          disabled={isLoading}>
           <Text
-            // eslint-disable-next-line react-native/no-inline-styles
             style={{
               color: 'white',
               alignSelf: 'center',

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -16,28 +16,10 @@ const SearchScreen = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const searchInputRef = useRef(null);
-  const [data, setData] = useState([
-    {
-      id: 1,
-      icon: '../../assest/icRandomize.png',
-      name: 'Learn a new receipe',
-      type: 'Cooking',
-      participant: '1 Person',
-      accesibility: 'Cheap',
-    },
-    {
-      id: 2,
-      icon: '../../assest/icRandomize.png',
-      name: 'Social',
-      type: 'Cooking',
-      participant: '1 Person',
-      accesibility: 'Cheap',
-    },
-    // Add more items as needed
-  ]);
+  const [data, setData] = useState(require('../activities.json'));
 
   const filteredData = data.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    item?.activity.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const clearSearch = () => {
@@ -101,36 +83,45 @@ const SearchScreen = ({navigation}) => {
           )}
         </View>
       </View>
-      <FlatList
-        style={{
-          backgroundColor: 'white',
-        }}
-        data={filteredData}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <View style={styles.listItem}>
-            <Image
-              source={require('../../assest/icRandomize.png')}
-              style={styles.icon}
-            />
-            <View
-              style={{
-                width: 340,
-                borderBottomWidth: 1,
-                borderColor: '#ccc',
-              }}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.subtitle}>
-                {item.type + '•' + item.participant + '•' + item.accesibility}
-              </Text>
-            </View>
-            <Image
-              source={require('../../assest/arrow.png')}
-              style={styles.arrowIcon}
-            />
-          </View>
-        )}
-      />
+      {data && (
+        <FlatList
+          style={{
+            backgroundColor: 'white',
+          }}
+          data={filteredData}
+          keyExtractor={item => item?.key.toString()}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+              <View style={styles.listItem}>
+                <Image
+                  source={require('../../assest/icon2.png')}
+                  style={styles.icon}
+                />
+                <View
+                  style={{
+                    width: 340,
+                    borderBottomWidth: 1,
+                    borderColor: '#ccc',
+                  }}>
+                  <Text style={styles.activity}>{item?.activity}</Text>
+                  <Text style={styles.subtitle}>
+                    {item.type +
+                      ' • ' +
+                      item.participants +
+                      ' Person' +
+                      ' • ' +
+                      (item.price > 0.5 ? ' Expensive' : ' Cheap')}
+                  </Text>
+                </View>
+                <Image
+                  source={require('../../assest/arrow.png')}
+                  style={styles.arrowIcon}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -163,14 +154,13 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 16,
-    // Add your icon styles here
   },
   clearIcon: {
     width: 8,
     height: 8,
     marginRight: 8,
   },
-  name: {
+  activity: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
@@ -183,8 +173,7 @@ const styles = StyleSheet.create({
   arrowIcon: {
     width: 8,
     height: 8,
-    marginLeft: 'auto', // This will push the arrow icon to the far right of the list item
-    // Add any other styles you want for the arrow icon
+    marginLeft: 'auto',
   },
 });
 
