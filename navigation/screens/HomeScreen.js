@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -141,7 +141,11 @@ const HomeScreen = ({navigation}) => {
 
       <TouchableOpacity
         style={styles.bigButton}
-        onPress={() => navigation.navigate('Search')}>
+        onPress={() => {
+          navigation.navigate('Chat', {
+            message: 'I want to activity'.replace('activity', activity),
+          });
+        }}>
         <View style={styles.buttonContent}>
           <Image
             source={require('../../assest/searchIcon.png')}
