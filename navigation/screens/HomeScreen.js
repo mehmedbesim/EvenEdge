@@ -12,8 +12,10 @@ import {
 import Slider from '@react-native-community/slider';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBoredAPI} from './redux/actions';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({}) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [activity, setActivity] = useState('Stop being bored!');
   const [subText, setSubText] = useState(

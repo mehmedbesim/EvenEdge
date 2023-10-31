@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
-  Keyboard,
 } from 'react-native';
 
 const SearchScreen = ({navigation}) => {
@@ -91,7 +90,15 @@ const SearchScreen = ({navigation}) => {
           data={filteredData}
           keyExtractor={item => item?.key.toString()}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  message: 'I want to activity'.replace(
+                    'activity',
+                    item.activity,
+                  ),
+                })
+              }>
               <View style={styles.listItem}>
                 <Image
                   source={require('../../assest/icon2.png')}
